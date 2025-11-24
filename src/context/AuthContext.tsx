@@ -1,5 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://student-schedular-backend.onrender.com';
+
 interface AuthContextType {
   token: string | null;
   role: 'student' | 'manager' | null;
@@ -34,7 +36,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch('http://localhost:3001/api/v1/auth/manager', {
+      const response = await fetch(`${API_BASE_URL}/api/v1/auth/manager`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ password }),
