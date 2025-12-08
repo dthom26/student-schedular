@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import { useAuth } from '../context/AuthContext';
-import StudentAuth from './StudentAuth';
-import './RoleSelector.css';
+import React, { useState } from "react";
+import { useAuth } from "../context/AuthContext";
+import StudentAuth from "./StudentAuth";
+import "./RoleSelector.css";
 
 const RoleSelector: React.FC = () => {
-  const { loginManager, authenticateStudent, isLoading, error, clearError } = useAuth();
-  const [password, setPassword] = useState('');
+  const { loginManager, authenticateStudent, isLoading, error, clearError } =
+    useAuth();
+  const [password, setPassword] = useState("");
   const [showPasswordInput, setShowPasswordInput] = useState(false);
   const [showStudentAuth, setShowStudentAuth] = useState(false);
 
@@ -29,7 +30,7 @@ const RoleSelector: React.FC = () => {
     e.preventDefault();
     try {
       await loginManager(password);
-      setPassword('');
+      setPassword("");
       setShowPasswordInput(false);
     } catch {
       // Error is handled and displayed
@@ -79,14 +80,14 @@ const RoleSelector: React.FC = () => {
                   className="submit-button"
                   disabled={isLoading || !password}
                 >
-                  {isLoading ? 'Logging in...' : 'Login'}
+                  {isLoading ? "Logging in..." : "Login"}
                 </button>
                 <button
                   type="button"
                   className="cancel-button"
                   onClick={() => {
                     setShowPasswordInput(false);
-                    setPassword('');
+                    setPassword("");
                     clearError();
                   }}
                   disabled={isLoading}

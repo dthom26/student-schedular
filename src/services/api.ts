@@ -91,12 +91,15 @@ export async function fetchSubmissions(
 }
 
 export async function getStudentSubmission(studentId: string): Promise<any> {
-  const response = await fetch(`${API_BASE_URL}/api/v1/submissions/${studentId}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  const response = await fetch(
+    `${API_BASE_URL}/api/v1/submissions/${studentId}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
 
   if (response.status === 404) {
     return null; // No submission found for this student
@@ -127,19 +130,22 @@ export async function updateStudentSchedule(
     throw new Error("Schedule cannot be empty");
   }
 
-  const response = await fetch(`${API_BASE_URL}/api/v1/submissions/${studentId}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      studentId: payload.student.id,
-      studentName: payload.student.name,
-      location: payload.student.location,
-      schedule: payload.schedule,
-      notes: payload.notes || "",
-    }),
-  });
+  const response = await fetch(
+    `${API_BASE_URL}/api/v1/submissions/${studentId}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        studentId: payload.student.id,
+        studentName: payload.student.name,
+        location: payload.student.location,
+        schedule: payload.schedule,
+        notes: payload.notes || "",
+      }),
+    }
+  );
 
   if (!response.ok) {
     const errorData = await response.json();

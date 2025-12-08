@@ -94,16 +94,19 @@ export default function WeekGridWireframe() {
 
       if (studentData.existingSubmission) {
         setNotes(studentData.existingSubmission.notes || "");
-        
+
         // Convert the schedule back to grid format
         const newGrid: Grid = { ...initialGrid };
-        studentData.existingSubmission.schedule.forEach((slot: { day: Day; time: string; type: string }) => {
-          const dayTimes = getTimesForDay(slot.day);
-          const timeIndex = dayTimes.indexOf(slot.time);
-          if (timeIndex !== -1) {
-            newGrid[slot.day][timeIndex] = slot.type as keyof typeof cellTypes;
+        studentData.existingSubmission.schedule.forEach(
+          (slot: { day: Day; time: string; type: string }) => {
+            const dayTimes = getTimesForDay(slot.day);
+            const timeIndex = dayTimes.indexOf(slot.time);
+            if (timeIndex !== -1) {
+              newGrid[slot.day][timeIndex] =
+                slot.type as keyof typeof cellTypes;
+            }
           }
-        });
+        );
         setGrid(newGrid);
       }
     }
@@ -347,7 +350,7 @@ export default function WeekGridWireframe() {
       notes,
       cellTypes
     );
-    
+
     try {
       let result;
       if (isUpdate) {
@@ -359,7 +362,7 @@ export default function WeekGridWireframe() {
         console.log("Submission successful:", result);
         alert("Schedule submitted successfully!");
       }
-      
+
       // Don't reset the form after successful update, but do after new submission
       if (!isUpdate) {
         setGrid(initialGrid);
@@ -373,7 +376,7 @@ export default function WeekGridWireframe() {
       }
     } catch (error) {
       console.error("Submission failed:", error);
-      alert(`Failed to ${isUpdate ? 'update' : 'submit'}. Please try again.`);
+      alert(`Failed to ${isUpdate ? "update" : "submit"}. Please try again.`);
     }
   };
 
@@ -382,11 +385,24 @@ export default function WeekGridWireframe() {
   return (
     <div className="weekgrid-root">
       <div className="weekgrid-left">
-        <div style={{ marginBottom: "20px", padding: "15px", backgroundColor: "#f5f5f5", borderRadius: "5px" }}>
+        <div
+          style={{
+            marginBottom: "20px",
+            padding: "15px",
+            backgroundColor: "#f5f5f5",
+            borderRadius: "5px",
+          }}
+        >
           <h3>Student Information</h3>
-          <p><strong>Student ID:</strong> {studentId}</p>
-          <p><strong>Name:</strong> {studentName}</p>
-          <p><strong>Location:</strong> {location}</p>
+          <p>
+            <strong>Student ID:</strong> {studentId}
+          </p>
+          <p>
+            <strong>Name:</strong> {studentName}
+          </p>
+          <p>
+            <strong>Location:</strong> {location}
+          </p>
           {hasExistingSubmission && (
             <p style={{ color: "#4caf50" }}>✓ Editing existing submission</p>
           )}
@@ -436,7 +452,11 @@ export default function WeekGridWireframe() {
         <div>
           <button onClick={() => setGrid(initialGrid)}>Clear</button>{" "}
           <button disabled={!canSubmit || isLoading} onClick={handleSubmit}>
-            {isLoading ? 'Loading...' : (isUpdate ? 'Update Schedule' : 'Submit Schedule')}
+            {isLoading
+              ? "Loading..."
+              : isUpdate
+                ? "Update Schedule"
+                : "Submit Schedule"}
           </button>
           {!canSubmit && (
             <div className="warning">
@@ -445,12 +465,14 @@ export default function WeekGridWireframe() {
             </div>
           )}
           {hasExistingSubmission && !isLoading && (
-            <div style={{ marginTop: '10px', color: '#4caf50', fontSize: '14px' }}>
+            <div
+              style={{ marginTop: "10px", color: "#4caf50", fontSize: "14px" }}
+            >
               ✓ Found existing submission - you can update your schedule
             </div>
           )}
           {isLoading && (
-            <div style={{ marginTop: '10px', color: '#666', fontSize: '14px' }}>
+            <div style={{ marginTop: "10px", color: "#666", fontSize: "14px" }}>
               Checking for existing submission...
             </div>
           )}

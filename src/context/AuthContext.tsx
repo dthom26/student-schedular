@@ -94,7 +94,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
           // Student tokens don't need validation
           setToken(savedToken);
           setRole(savedRole);
-          
+
           // Load student data if available
           if (savedStudentData) {
             try {
@@ -175,7 +175,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     setRole("student");
     setToken("student-token");
     setError(null);
-    
+
     // Save to localStorage
     localStorage.setItem("authRole", "student");
     localStorage.setItem("authToken", "student-token");

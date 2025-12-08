@@ -41,12 +41,14 @@ export const retrieveSubmissions = async (req, res, next) => {
 export const getSubmissionByStudentId = async (req, res, next) => {
   try {
     const { studentId } = req.params;
-    
+
     const submission = await Submission.findOne({ studentId });
     if (!submission) {
-      return res.status(404).json({ message: "Submission not found for this student ID." });
+      return res
+        .status(404)
+        .json({ message: "Submission not found for this student ID." });
     }
-    
+
     res.status(200).json(submission);
   } catch (error) {
     next(error);
@@ -65,7 +67,9 @@ export const updateSubmission = async (req, res, next) => {
     );
 
     if (!updatedSubmission) {
-      return res.status(404).json({ message: "Submission not found for this student ID." });
+      return res
+        .status(404)
+        .json({ message: "Submission not found for this student ID." });
     }
 
     res.status(200).json(updatedSubmission);
