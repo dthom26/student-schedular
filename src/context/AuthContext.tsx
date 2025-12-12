@@ -63,15 +63,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     try {
       // Use lightweight validation endpoint instead of fetching submissions
       // This saves 70-90% of validation time (no database query, no data transfer)
-      const response = await fetch(
-        `${API_BASE_URL}/api/v1/auth/validate`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${savedToken}`,
-          },
-        }
-      );
+      const response = await fetch(`${API_BASE_URL}/api/v1/auth/validate`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${savedToken}`,
+        },
+      });
 
       return response.ok;
     } catch (error) {
