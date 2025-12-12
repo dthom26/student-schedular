@@ -33,7 +33,7 @@ export default function StudentAuth({
     return name.trim().length >= 2 && /^[a-zA-Z\s]+$/.test(name.trim());
   };
 
-  const handleNewStudent = async () => {
+  const handleNewStudent = () => {
     // Validate inputs
     if (!validateStudentId(studentId)) {
       setError(
@@ -41,46 +41,24 @@ export default function StudentAuth({
       );
       return;
     }
-
     if (!validateStudentName(studentName)) {
       setError(
         "Please enter a valid name (letters only, at least 2 characters)"
       );
       return;
     }
-
     if (!location) {
       setError("Please select a location");
       return;
     }
-
-    setIsLoading(true);
     setError(null);
-
-    try {
-      // Check if student ID already exists
-      const existingSubmission = await getStudentSubmission(studentId);
-      if (existingSubmission) {
-        setError(
-          "A student with this ID already has a submission. Please use 'Returning Student' option."
-        );
-        setIsLoading(false);
-        return;
-      }
-
-      // Proceed with new student
-      onStudentAuthenticated({
-        studentId: studentId.trim(),
-        studentName: studentName.trim(),
-        location,
-        isReturning: false,
-      });
-    } catch (error) {
-      console.error("Error checking student ID:", error);
-      setError("Failed to validate student ID. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
+    // Proceed with new student
+    onStudentAuthenticated({
+      studentId: studentId.trim(),
+      studentName: studentName.trim(),
+      location,
+      isReturning: false,
+    });
   };
 
   const handleReturningStudent = async () => {

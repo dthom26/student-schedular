@@ -376,7 +376,20 @@ export default function WeekGridWireframe() {
       }
     } catch (error) {
       console.error("Submission failed:", error);
-      alert(`Failed to ${isUpdate ? "update" : "submit"}. Please try again.`);
+
+      // Check if it's a duplicate submission error
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
+      if (
+        errorMessage.includes("already exists") ||
+        errorMessage.includes("409")
+      ) {
+        alert(
+          `This student ID already has a submission. Please use the "Returning Student" option to update your schedule.`
+        );
+      } else {
+        alert(`Failed to ${isUpdate ? "update" : "submit"}. Please try again.`);
+      }
     }
   };
 
